@@ -1,11 +1,8 @@
-// ------------------- server.js -------------------
 require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
-
-// For Node <18
 const fetch = require("node-fetch");
 
 const app = express();
@@ -13,8 +10,6 @@ const app = express();
 // ------------------- MIDDLEWARE -------------------
 app.use(cors());
 app.use(express.json());
-
-// Serve frontend files (index.html, style.css, script.js)
 app.use(express.static(__dirname));
 
 // ------------------- PORT -------------------
@@ -25,12 +20,12 @@ console.log("🔑 API Key loaded:", UNSPLASH_KEY ? "YES ✅" : "NO ❌");
 
 // ------------------- ROUTES -------------------
 
-// Homepage
+// Serve frontend
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
-// API endpoint for image search
+// API endpoint
 app.get("/api/images", async (req, res) => {
   const query = req.query.query;
 
@@ -41,16 +36,13 @@ app.get("/api/images", async (req, res) => {
   try {
     const url = `https://api.unsplash.com/search/photos?query=${encodeURIComponent(
       query
-    )}&per_page=24&client_id=${UNSPLASH_KEY}`;
+    )}&per_page=24`;
 
-    const response = await fetch(url);
-
-    if (!response.ok) {
-      return res.status(response.status).json({
-        error: "Unsplash API error",
-        status: response.status,
-      });
-    }
+    const response = await fetch(url, {
+      headers: {
+        Authorization: `Client-ID ${UNSPLASH_KEY}`,
+      },
+    });
 
     const data = await response.json();
 
@@ -63,8 +55,7 @@ app.get("/api/images", async (req, res) => {
 
     res.json(images);
   } catch (err) {
-    console.error("Server error:", err);
-    res.status(500).json({ error: "Server error", details: err.message });
+    res.status(500).json({ error: "Server error" });
   }
 });
 
