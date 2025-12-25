@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Smart Image Search</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- LOGIN BOX -->
+<div id="loginBox" class="loginBox">
+    <h2>Login</h2>
+    <input type="text" id="phoneInput" placeholder="Enter Phone Number">
+    <input type="password" id="passwordInput" placeholder="Enter Password">
+    <button id="loginBtn">Login</button>
+</div>
+
+<!-- MAIN CONTAINER -->
+<div class="container">
+    <button id="logoutBtn">Logout</button>
+    <h1>AI Smart Image Search</h1>
+
+    <!-- Recent Searches -->
+    <div id="recentSearches" class="recent-searches"></div>
+
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search any image...">
+        <button onclick="searchImage()">Search</button>
+        <button id="showFavoritesBtn">Show Favorites</button>
+    </div>
+
+    <div id="imageResults" class="image-grid"></div>
+</div>
+
+<!-- Preview popup -->
+<div id="previewBox" class="previewBox">
+    <span id="closePreview">&times;</span>
+    <img id="previewImg" src="" alt="Preview">
+    <a id="downloadBtn" class="downloadBtn">Download</a>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
